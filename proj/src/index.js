@@ -7,6 +7,8 @@ function component() {
     return element;
 }
 
+document.body.appendChild(component());
+
 function createHeatmap() {
 var heatmapInstance = h337.create({
     container: document.querySelector('.heatmap')
@@ -35,6 +37,6 @@ var heatmapInstance = h337.create({
   };
 
   heatmapInstance.setData(data);
-}
+};
+
 createHeatmap();
-document.body.appendChild(component());
