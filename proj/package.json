@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -15,6 +13,8 @@
     "webpack-cli": "^3.0.2"
   },
   "dependencies": {
-    "lodash": "^4.17.10"
+    "brfs": "^1.6.1",
+    "lodash": "^4.17.10",
+    "transform-loader": "^0.2.4"
   }
 }

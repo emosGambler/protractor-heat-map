@@ -1,5 +1,6 @@
-import _ from 'lodash';
+let _ = require('lodash');
 let h337 = require('heatmap.js');
+var fs = require('fs');
 
 function component() {
     var element = document.createElement('div');
@@ -9,34 +10,54 @@ function component() {
 
 document.body.appendChild(component());
 
-function createHeatmap() {
-var heatmapInstance = h337.create({
-    container: document.querySelector('.heatmap')
+function getLogs() {
+  return new Promise((resolve, reject) => {
+    return fs.readFile('./../../protractor-heat-map/playground/logs/logs.json', 'utf8', (err, data) => {
+      return err ? reject(err) : resolve(data);
+    });
   });
-  
-  var points = [];
-  var max = 0;
-  var width = 840;
-  var height = 400;
-  var len = 200;
-  
-  while (len--) {
-    var val = Math.floor(Math.random()*100);
-    max = Math.max(max, val);
-    var point = {
-      x: Math.floor(Math.random()*width),
-      y: Math.floor(Math.random()*height),
-      value: val
-    };
-    points.push(point);
-  }
-
-  var data = { 
-    max: max, 
-    data: points 
-  };
-
-  heatmapInstance.setData(data);
 };
+
+function createHeatmap() {
+
+  // wczytaj logi
+  getLogs().then(logs => {
+    var heatmapInstance = h337.create({
+      container: document.querySelector('.heatmap')
+    });
+    
+    // weź actions
+    actions = JSON.parse(logs).actions;
+    console.log('actions: ', actions);
+
+    // tylko akcje click, clear, sendKeys
+    let points = [];
+    let j = 0;
+    console.log('actions.length: ', actions.length);
+    for (let i = 0; i < actions.length; i++) {
+      if(actions[i].action === 'element.clear()' || actions[i].action === 'element.click()' || actions[i].action === 'element.sendKeys()') {
+        j++;
+        points[j] = { action: actions[i].action, x: actions[i].x, y: actions[i].y };
+      }
+    }
+    console.log('points: ', points);
+
+    var max = 0;
+    var width = 840;
+    var height = 400;
+    var len = 200;
+  
+    var data = { 
+      max: max, 
+      data: points 
+    };
+  
+    heatmapInstance.setData(data);
+    
+
+  }).catch(error => console.log('Error: ', error));
+
+};
+
 
 createHeatmap();
