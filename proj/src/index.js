@@ -31,25 +31,14 @@ function createHeatmap() {
     console.log('actions: ', actions);
 
     // tylko akcje click, clear, sendKeys
-    let points = [];
-    let j = 0;
-    console.log('actions.length: ', actions.length);
-    for (let i = 0; i < actions.length; i++) {
-      if(actions[i].action === 'element.clear()' || actions[i].action === 'element.click()' || actions[i].action === 'element.sendKeys()') {
-        j++;
-        points[j] = { action: actions[i].action, x: actions[i].x, y: actions[i].y };
-      }
-    }
-    console.log('points: ', points);
+    
+    let points = getSuperPoints();
 
-    var max = 0;
-    var width = 840;
-    var height = 400;
-    var len = 200;
+    console.log('points: ', points);
   
     var data = { 
-      max: max, 
-      data: points 
+      max: 100,
+      data: points
     };
   
     heatmapInstance.setData(data);
@@ -59,5 +48,34 @@ function createHeatmap() {
 
 };
 
+function getRandomPoints(len, max) {
+  let points = [];
+  var width = 915;
+  var height = 2000;
+  while (len--) {
+    var val = Math.floor(Math.random()*100);
+    max = Math.max(max, val);
+    var point = {
+      x: Math.floor(Math.random()*width),
+      y: Math.floor(Math.random()*height),
+      value: val
+    };
+    points.push(point);
+  }
+  return points;
+
+}
+  function getSuperPoints() {
+    let points = [];
+    let j = 0;
+    console.log('actions.length: ', actions.length);
+    for (let i = 0; i < actions.length; i++) {
+      if(actions[i].action === 'element.clear()' || actions[i].action === 'element.click()' || actions[i].action === 'element.sendKeys()') {
+        points[j] = { x: Math.floor(actions[i].x), y: Math.floor(actions[i].y), value: 50 };
+        j++;
+      }
+    }
+    return points;
+  }
 
 createHeatmap();
