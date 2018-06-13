@@ -18,7 +18,7 @@ function getLogs() {
   });
 };
 
-function createHeatmap() {
+(function createHeatmap() {
 
   // wczytaj logi
   getLogs().then(logs => {
@@ -46,7 +46,7 @@ function createHeatmap() {
 
   }).catch(error => console.log('Error: ', error));
 
-};
+})();
 
 function getPoints() {
   let points = [];
@@ -61,5 +61,3 @@ function getPoints() {
   }
   return points;
 }
-
-module.exports = { createHeatmap };
