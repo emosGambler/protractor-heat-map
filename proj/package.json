@@ -2,7 +2,10 @@
   "name": "protractor-heat-map",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
+  "bin": {
+    "snippet": "./src/scripts/scripts.js"
+  },
   "scripts": {},
   "keywords": [],
   "author": "",

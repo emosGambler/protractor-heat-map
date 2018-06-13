@@ -1,6 +1,7 @@
 import { browser, Config } from 'protractor';
 import * as JasmineConsoleReporter from 'jasmine-console-reporter';
 import { saveLogs } from 'protractor-logs';
+import { createHeatmap } from 'protractor-heat-map';
 
 export let config: Config = {
     baseUrl: 'https://angularjs.org/',
