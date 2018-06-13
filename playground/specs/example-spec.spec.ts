@@ -26,7 +26,7 @@ describe('Example', () => {
         homePage.learnMenuOption.click();
         expect(homePage.learnMenu.isDisplayed()).toBe(true);
 
-        homePage.learnMenu.click();
+        homePage.learnMenuOption.click();
     });
     
     it('should element.getAttribute() work', () => {
