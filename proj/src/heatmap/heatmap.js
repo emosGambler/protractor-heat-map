@@ -12,6 +12,7 @@ document.body.appendChild(component());
 
 function getLogs() {
   return new Promise((resolve, reject) => {
+    //let regexp = /^\.\/\.\.\/\.\.\/protractor\-heat\-map\/playground\/logs\/logs.*\.json$/;
     return fs.readFile('./../../protractor-heat-map/playground/logs/logs.json', 'utf8', (err, data) => {
       return err ? reject(err) : resolve(data);
     });

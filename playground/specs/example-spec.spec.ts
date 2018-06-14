@@ -1,6 +1,5 @@
 import { AngularPage } from './../pages/angular.page';
 import { HomePage } from './../pages/home.page';
-import { namesData } from './../data/example.td';
 import { openUrl, setPage } from 'protractor-logs';
 
 const homePage: HomePage = new HomePage();
