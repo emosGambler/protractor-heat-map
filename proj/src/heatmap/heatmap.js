@@ -2,14 +2,6 @@ let _ = require('lodash');
 let h337 = require('heatmap.js');
 var fs = require('fs');
 
-function component() {
-    var element = document.createElement('div');
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    return element;
-}
-
-document.body.appendChild(component());
-
 function getLogs() {
   return new Promise((resolve, reject) => {
     return fs.readFile('./../../protractor-heat-map/playground/logs/logs.json', 'utf8', (err, data) => {
@@ -27,21 +19,21 @@ function getLogs() {
     });
     
     // weź actions
-    actions = JSON.parse(logs).actions;
+    var parsedLogs = JSON.parse(logs);
+    var actions = parsedLogs.actions;
+    var pages = parsedLogs.pages;
     console.log('actions: ', actions);
 
-    // tylko akcje click, clear, sendKeys
-    
-    let points = getPoints();
+    var points = getPoints(actions);
 
     console.log('points: ', points);
   
     var data = { 
-      max: 100,
+      max: 1,
       data: points
     };
 
-    addImage();
+    addImage(pages);
     heatmapInstance.setData(data);
     
 
@@ -49,11 +41,13 @@ function getLogs() {
 
 })();
 
-const addImage = () => {
-  document.querySelector('.heatmap').setAttribute('style', "background-image: url('./../../../logs/screenshots/home.page.png'); height: 2000px; position: relative;")
+const addImage = (pages) => {
+  var width = pages[0].value.resolution.width;
+  var height = pages[0].value.resolution.height;
+  document.querySelector('.heatmap').setAttribute('style', `background-image: url('./../../../logs/screenshots/home.page.png'); width: ${width}px; height: ${height}px; position: relative;`)
 };
 
-function getPoints() {
+function getPoints(actions) {
   let points = [];
   let j = 0;
   console.log('actions.length: ', actions.length);

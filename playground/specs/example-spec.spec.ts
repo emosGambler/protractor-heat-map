@@ -70,4 +70,11 @@ describe('Going back to home page', () => {
     it('should not add any more pages to logs', () => {
         expect(homePage.logo.isPresent()).toBe(true);
     });
+
+    it('should click main logo 3 times', () => {
+        homePage.mainPageButton.click();
+        homePage.mainPageButton.click();
+        homePage.mainPageButton.click();
+        expect(true).toBe(true);
+    });
 });
